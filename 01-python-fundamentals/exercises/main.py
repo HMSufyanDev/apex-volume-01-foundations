@@ -28,3 +28,6 @@ celsius: float = 30.0
 fahrenheit: float = (celsius * 9 / 5) + 32
 
 print(fahrenheit)
+
+
+name = "sufyan"
