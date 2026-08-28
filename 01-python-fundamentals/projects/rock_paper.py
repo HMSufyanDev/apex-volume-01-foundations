@@ -56,9 +56,9 @@ print("FINAL RESULT")
 print(f"You: {user_score} | Computer: {computer_score} | Draws: {draws}")
 
 if user_score > computer_score:
-    print("Overall Winner: YOU! 🎉")
+    print("Overall Winner: YOU!")
 elif computer_score > user_score:
-    print("Overall Winner: COMPUTER! 🤖")
+    print("Overall Winner: COMPUTER!")
 else:
     print("Overall Result: IT'S A TIE!")
 print("="*30)
