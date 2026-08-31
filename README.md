@@ -66,11 +66,18 @@ Example:
 
 ```python
 name: str = "Sufyan"
+
 semester: int = 4
-target_income_usd: int = 3000
+
+target_income_usd: int = 5000
 ```
 
-I also practiced basic calculations such as currency conversion, age calculation, rectangle area, and temperature conversion.
+I also practiced basic calculations such as:
+
+* Currency conversion
+* Age calculation
+* Rectangle area
+* Temperature conversion
 
 ---
 
@@ -152,15 +159,11 @@ This helped me understand how programs can process multiple pieces of data autom
 
 ---
 
-### Day 6 — Mini Projects
+### Day 6 — Mini Project
 
-For the final part of the week, I combined the concepts from the previous days and built small programs instead of only doing individual exercises.
+For Day 6, I combined the concepts I learned throughout the week and built my first proper Python mini project.
 
----
-
-# Projects Built
-
-## 1. Freelancer Income Calculator
+## Freelancer Income Calculator
 
 A command-line calculator that takes:
 
@@ -181,9 +184,15 @@ It then calculates:
 
 I also added basic validation so negative values are rejected.
 
+This project helped me combine variables, data types, type conversion, arithmetic, conditions, input handling, loops, and basic validation into one working program.
+
 ---
 
-## 2. Rock, Paper, Scissors
+## Practice Projects Built During the Week
+
+While practicing the concepts from Days 1–5, I also built a few small programs to reinforce what I was learning.
+
+### 1. Rock, Paper, Scissors
 
 A command-line Rock, Paper, Scissors game where I play against the computer.
 
@@ -203,7 +212,7 @@ This project gave me a practical reason to use loops and conditions together.
 
 ---
 
-## 3. Website Pricing Engine
+### 2. Website Pricing Engine
 
 A small pricing system for generating website quotations.
 
@@ -217,42 +226,61 @@ It then applies discounts depending on the total price.
 
 The final output gives the client a quotation with the discount and final price.
 
-This project was especially useful because it connects Python programming with something I could actually use in a freelancing/business context.
+This project was especially useful because it connects Python programming with something I could actually use in my freelancing/business context.
 
 ---
 
-# Concepts I Used Across the Week
-
-By the end of Week 1, I had practiced:
+## Concepts I Used Across the Week
 
 ```text
 Python execution
+
 Variables
+
 Type hints
+
 Data types
+
 Type conversion
+
 Strings
+
 String methods
+
 Indexing
+
 Slicing
+
 f-strings
+
 Arithmetic
+
 Comparisons
+
 Logical operators
+
 if / elif / else
+
 Truthy / falsy
+
 for loops
+
 while loops
+
 range()
+
 break
+
 continue
+
 input()
+
 Basic validation
 ```
 
 ---
 
-# What I Can Do Now
+## What I Can Do Now
 
 After Week 1, I can write small Python programs that:
 
