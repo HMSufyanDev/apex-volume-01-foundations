@@ -103,7 +103,7 @@ The biggest thing I practiced was keeping a program running continuously with a 
 Run the Python file from the terminal:
 
 ```bash
-python rock_paper_scissors.py
+python rock_paper.py
 ```
 
 Then follow the instructions shown in the terminal.

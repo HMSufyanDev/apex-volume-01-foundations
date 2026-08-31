@@ -98,7 +98,7 @@ PKR Income
 Make sure Python is installed, then run:
 
 ```bash
-python day6.py
+python freelancer_income_calculator.py
 ```
 
 ## What I Learned
