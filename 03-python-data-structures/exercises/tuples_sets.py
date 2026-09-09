@@ -75,3 +75,17 @@ print(f"All unique students: {python_students | ai_students}")
 
 # Task 5: Find Python-Only Students
 print(f"Students who study Python but not AI: {python_students - ai_students}")
+
+# Task 6: Check Student Enrollment
+name = input("Enter student name: ").capitalize()
+is_in_python = name in python_students
+is_in_ai = name in ai_students
+
+if is_in_python and is_in_ai:
+    print(f"{name} is enrolled in: Python and AI")
+elif is_in_python:
+    print(f"{name} is enrolled in: Python")
+elif is_in_ai:
+    print(f"{name} is enrolled in: AI")
+else:
+    print(f"{name} is not enrolled")
