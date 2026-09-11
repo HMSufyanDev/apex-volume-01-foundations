@@ -78,3 +78,64 @@ sorted_clients = sorted(
     key=lambda client: client["price"],
     reverse=True
 )
+
+# setdefault()
+person = {"name": "Alice"}
+
+# 1. Key DOES NOT exist ("age")
+# Python adds "age": 18 to the dictionary and returns 18
+age = person.setdefault("age", 18)
+
+print(age)     # 18
+print(person)  # {'name': 'Alice', 'age': 18}
+
+
+# 2. Key ALREADY exists ("name")
+# Python keeps "Alice" (ignores "Bob") and returns "Alice"
+name = person.setdefault("name", "Bob")
+
+print(name)    # Alice
+print(person)  # {'name': 'Alice', 'age': 18}
+
+# Group Leads by Country
+leads = [
+    {"name": "ABC Dental", "country": "Australia"},
+    {"name": "XYZ Clinic", "country": "Canada"},
+    {"name": "Smile Care", "country": "Australia"},
+    {"name": "Bright Dental", "country": "UK"}
+]
+
+# Start With an Empty Dictionary
+grouped_leads = {}
+for lead in leads:
+    country = lead["country"]
+    grouped_leads.setdefault(country, []).append(lead)
+
+print(grouped_leads)
+
+# Count Leads by Status
+leads = [
+    {"name": "A", "status": "new"},
+    {"name": "B", "status": "contacted"},
+    {"name": "C", "status": "new"},
+    {"name": "D", "status": "converted"},
+    {"name": "E", "status": "new"}
+]
+
+status_counts = {}
+for lead in leads:
+    status = lead["status"]
+    if status not in status_counts:
+        status_counts[status] = 0
+    status_counts[status] += 1
+print(status_counts)
+
+# Filter Unpaid Invoices
+invoices = [
+    {"client": "A", "paid": True},
+    {"client": "B", "paid": False},
+    {"client": "C", "paid": False}
+]
+
+unpaid = [invoice for invoice in invoices if not invoice["paid"]]
+print(unpaid)
