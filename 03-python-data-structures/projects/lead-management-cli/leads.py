@@ -1,3 +1,4 @@
+# Initial mock data for testing
 leads = [
     {
         "name": "Sarah Connor",
@@ -37,6 +38,7 @@ leads = [
 ]
 
 def add_lead():
+    # Prompt user for new lead details
     name = input("Enter lead name: ")
     country = input("Enter country: ")
     email = input("Enter email: ")
@@ -54,6 +56,7 @@ def add_lead():
     leads.append(lead)
 
 def view_all_leads():
+    # Loop through and print every lead with 1-based indexing
     for index, lead in enumerate(leads, start=1):
         print()
         print("=" * 30)
@@ -68,6 +71,7 @@ def view_all_leads():
         print()
 
 def search_leads():
+    # Keep asking until a lead is found or user chooses to exit back to menu
     while True:
         query = input("Search lead: ").lower()
             
@@ -87,7 +91,11 @@ def search_leads():
                 return
 
         print("Lead not found. Please try again.\n")
-            
+
+        check = input("Do you wanna go back? Y/N: ").lower()
+        if check == "y":
+            return
+       
 
 
 def update_lead_status():
@@ -103,6 +111,9 @@ def update_lead_status():
 
         print("Lead not found. Please try again.\n")
     
+        check = input("Do you wanna go back? Y/N: ").lower()
+        if check == "y":
+            return
 
 def delete_lead():
     while True:
@@ -114,8 +125,12 @@ def delete_lead():
                 return
         print("Lead not found. Please try again.\n")
 
+        check = input("Do you wanna go back? Y/N: ").lower()
+        if check == "y":
+            return
 
 def calculate_pipeline_value():
+    # Sum up estimated values across all leads
     total = sum(
     lead["estimated_value"]
     for lead in leads
@@ -128,6 +143,7 @@ def calculate_pipeline_value():
 def filter_by_country():
     search_country = input("Enter leads country: ").strip().lower()
 
+    # Filter matching leads into a new list
     filter_lead = [lead for lead in leads if lead["country"].lower() == search_country]
   
     for index, lead in enumerate(filter_lead, start=1):

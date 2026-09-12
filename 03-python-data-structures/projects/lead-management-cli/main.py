@@ -16,6 +16,7 @@ def show_menu():
     print("9. Exit")
 
 def main():
+    # Main application loop
     while True:
         show_menu()
         choice = input("\nChoose an option (1-9): ")
@@ -40,5 +41,6 @@ def main():
             print("Goodbye!")
             break
 
+# Entry point
 if __name__ == "__main__":
     main()
