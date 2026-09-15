@@ -60,5 +60,32 @@ class Invoice:
         return self.status
 
 
+# Freelance Client Tracker
+class Client:
 
+    def __init__(self, name, company, email, project_value):
+        self.name = name
+        self.company = company
+        self.email = email
+        self.project_value = project_value
+        self.status = "active"
+
+    def close_client(self):
+        self.status = "closed"
+
+    def update_value(self, new_value):
+            self.project_value = new_value
+
+    def display_info(self):
+        print(f"Name: {self.name}")
+        print(f"Company: {self.company}")
+        print(f"Email: {self.email}")
+        print(f"Project Value: {self.project_value}")
+        print(f"Status: {self.status}")
+
+client1 = Client("Sufyan", "Apex Solutions", "sufyan@gmail.com", 14500.0)
+client1.display_info()
+client1.update_value(12400.0)
+client1.close_client()
+client1.display_info()
         
