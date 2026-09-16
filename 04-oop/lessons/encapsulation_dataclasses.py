@@ -174,3 +174,40 @@ lead2 = Lead("sarah@example.com")
 print(lead1 == lead2) # True
 # Dunder methods let my objects participate naturally in Python's built-in operations.
 
+
+# Dataclasses
+# it can make classes dramatically shorter.
+# Import dataclass
+from dataclasses import dataclass
+@dataclass
+class Lead:
+    name: str
+    email: str
+    country: str
+    estimated_value: float
+    status: str = "new"
+
+# No manual __init__.
+# Type annotations
+name: str
+email: str
+country: str
+estimated_value: float
+status: str
+
+
+@dataclass
+class Lead:
+    name: str
+    email: str
+    country: str
+    estimated_value: float
+    status: str = "new"
+
+lead = Lead(
+    "Sarah Connor",
+    "sarah@example.com",
+    "United States",
+    4500
+)
+# The dataclass automatically provides the constructor.
