@@ -114,3 +114,126 @@ class Client(Person):
 
 client = Client()
 print(client.introduce())
+
+
+# Composition
+# Composition means an object contains or uses other objects.
+
+class Client:
+
+    def __init__(self, name):
+        self.name = name
+        self.projects = []
+
+# Create Project
+class Project:
+
+    def __init__(self, name, budget):
+        self.name = name
+        self.budget = budget
+        self.invoices = []
+
+# Create Invoice
+class Invoice:
+
+    def __init__(self, amount):
+        self.amount = amount
+        self.status = "unpaid"
+
+# Connecting Client → Project
+client1 = Client("Sarah Connor")
+project1 = Project("Ecommerce Website", 5000)
+client1.projects.append(project1)
+
+# Connecting Project → Invoice
+invoice1 = Invoice(2500)
+invoice2 = Invoice(2500)
+
+project1.invoices.append(invoice1)
+project1.invoices.append(invoice2)
+
+# The complete relationship
+client = Client("Sarah")
+project1 = Project("Website", 5000)
+project2 = Project("Mobile App", 8000)
+
+invoice1 = Invoice(2500)
+invoice2 = Invoice(2500)
+invoice3 = Invoice(4000)
+
+client.projects.append(project1)
+client.projects.append(project2)
+
+project1.invoices.append(invoice1)
+project1.invoices.append(invoice2)
+
+project2.invoices.append(invoice3)
+
+# Let's make adding projects a method
+class Client:
+
+    def __init__(self, name):
+        self.name = name
+        self.projects = []
+
+    def add_project(self, project):
+        self.projects.append(project)
+
+class Project:
+
+    def __init__(self, name, budget):
+        self.name = name
+        self.budget = budget
+        self.invoices = []
+
+    def add_invoice(self, invoice):
+        self.invoices.append(invoice)
+
+client1.add_project(project1)
+project1.add_invoice(invoice1)
+
+
+# Listing Projects
+class Client:
+
+    def __init__(self, name):
+        self.name = name
+        self.projects = []
+
+    def add_project(self, project):
+        self.projects.append(project)
+
+    def list_projects(self):
+        for project in self.projects:
+            print(project.name)
+
+
+# Calculating project revenue
+class Project:
+
+    def __init__(self, name, budget):
+        self.name = name
+        self.budget = budget
+        self.invoices = []
+
+    def add_invoice(self, invoice):
+        self.invoices.append(invoice)
+
+    def calculate_revenue(self):
+        return sum(invoice.amount for invoice in self.invoices)
+
+# Calculating client revenue
+class Client:
+
+    def __init__(self, name):
+        self.name = name
+        self.projects = []
+
+    def add_project(self, project):
+        self.projects.append(project)
+
+    def calculate_revenue(self):
+        return sum(
+            project.calculate_revenue()
+            for project in self.projects
+        )
