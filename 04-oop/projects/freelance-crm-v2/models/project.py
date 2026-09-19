@@ -1,10 +1,17 @@
 class Project:
 
+    VALID_STATUSES = {
+        "Planning",
+        "In Progress",
+        "Completed",
+        "Cancelled"
+    }
+
     def __init__(self, name, budget, client):
         self.name = name
         self._budget = budget
         self.client = client
-        self.status = "active"
+        self.status = "Planning"
         self.invoices = []
 
     @property
@@ -17,6 +24,11 @@ class Project:
         self._budget = value
 
     def update_status(self, status):
+        if status not in self.VALID_STATUSES:
+            raise ValueError(
+                f"Invalid project status: {status}"
+            )
+
         self.status = status
 
     def add_invoice(self, invoice):
@@ -26,6 +38,13 @@ class Project:
         return sum(
             invoice.amount
             for invoice in self.invoices
+        )
+
+    def get_paid_revenue(self):
+        return sum(
+            invoice.amount
+            for invoice in self.invoices
+            if not invoice.is_outstanding()
         )
 
     def get_outstanding(self):

@@ -18,7 +18,9 @@ class Lead:
 
     def convert_to_client(self):
         if self.status != "Qualified":
-            return None
+            raise ValueError(
+                "Only qualified leads can be converted."
+            )
 
         from .client import Client
 

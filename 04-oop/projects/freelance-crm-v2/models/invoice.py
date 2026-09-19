@@ -3,13 +3,13 @@ class Invoice:
     def __init__(self, invoice_id, amount):
         self.invoice_id = invoice_id
         self._amount = amount
-        self.status = "unpaid"
+        self.status = "Unpaid"
 
     def mark_paid(self):
-        self.status = "paid"
+        self.status = "Paid"
 
     def mark_unpaid(self):
-        self.status = "unpaid"
+        self.status = "Unpaid"
 
     @property
     def amount(self):
@@ -22,7 +22,7 @@ class Invoice:
         self._amount = value
 
     def is_outstanding(self):
-        return self.status == "unpaid"
+        return self.status == "Unpaid"
 
     def __str__(self):
         return f"Invoice {self.invoice_id} - ${self.amount:,.2f} - {self.status}"
