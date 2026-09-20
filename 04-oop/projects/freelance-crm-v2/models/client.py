@@ -31,13 +31,23 @@ class Client:
         )
 
     def get_history(self):
-        return {
+        history = {
             "client": self.name,
-            "projects": self.projects,
-            "total_invoiced": self.get_total_revenue(),
-            "paid_revenue": self.get_paid_revenue(),
-            "outstanding_revenue": self.get_outstanding_revenue()
+            "projects": []
         }
+
+        for project in self.projects:
+
+            project_data = {
+                "name": project.name,
+                "status": project.status,
+                "revenue": project.get_total_invoiced(),
+                "invoices": project.invoices
+            }
+
+            history["projects"].append(project_data)
+
+        return history
 
     def __str__(self):
         return f"{self.name} - {self.email}"
