@@ -98,3 +98,8 @@ path.write_text("Hello", encoding="utf-8")
 # For append, we dont have append_text
 with path.open("a", encoding="utf-8") as file:
     file.write("New activity\n")
+
+# .resolve()
+path = Path("data/crm.json")
+print(path.resolve()) # C:\Users\Sufyan\Desktop\ProjectAPEX\week5\day2\data\crm.json
+
