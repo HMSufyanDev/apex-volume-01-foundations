@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Sarah Connor",
+        "country": "United States",
+        "email": "sarah@example.com",
+        "status": "Contacted",
+        "estimated_value": 4500
+    },
+    {
+        "name": "Alexandre Dubois",
+        "country": "France",
+        "email": "alexandre@example.com",
+        "status": "Contacted",
+        "estimated_value": 12000.5
+    },
+    {
+        "name": "Amina Bello",
+        "country": "Nigeria",
+        "email": "amina@example.com",
+        "status": "Proposal Sent",
+        "estimated_value": 8500
+    }
+]
