@@ -72,6 +72,8 @@ print(json_text) # {"name": "Sarah"}
 # it takes JSON text and converts it to Python data.
 
 
-
+# What Happens If the JSON Is Invalid?
+json.load(file)
+# Python's JSON parser will raise: json.decoder.JSONDecodeError
 
 
