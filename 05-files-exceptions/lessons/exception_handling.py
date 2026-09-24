@@ -91,5 +91,5 @@ if lead is None:
 # It can be useful at a top-level application boundary, for logging or preventing a CLI application from crashing unexpectedly.
 
 # Handle Unexpected Data Explicitly
-if not isinstance(data, dict):
-    raise ValueError("Expected JSON object.")
+# if not isinstance(data, dict):
+#     raise ValueError("Expected JSON object.")
