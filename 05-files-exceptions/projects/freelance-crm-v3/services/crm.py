@@ -2,9 +2,20 @@ from models import Project, Invoice
 
 class CRMService:
 
-    def __init__(self):
+    def __init__(self, storage):
+        self.storage = storage
         self.leads = []
         self.clients = []
+
+        # self.load_from_storage()
+
+
+    # -------------------------
+    # Storage Management
+    # -------------------------
+    
+    
+
 
     # -------------------------
     # Lead Management

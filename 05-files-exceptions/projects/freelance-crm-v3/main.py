@@ -150,12 +150,14 @@ def get_invoice_by_index(project):
 def add_lead(crm):
     print("\n--- Add Lead ---")
 
+    lead_id = input("ID: ").strip()
     name = input("Name: ").strip()
     email = input("Email: ").strip()
     country = input("Country: ").strip()
     estimated_value = get_positive_float("Estimated value ($): ")
 
     lead = Lead(
+        lead_id,
         name,
         email,
         country,

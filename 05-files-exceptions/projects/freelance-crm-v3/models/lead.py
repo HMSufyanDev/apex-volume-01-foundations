@@ -1,6 +1,7 @@
 class Lead:
 
-    def __init__(self, name, email, country, estimated_value):
+    def __init__(self, lead_id, name, email, country, estimated_value):
+        self.lead_id = lead_id
         self.name = name
         self.email = email
         self.country = country

@@ -7,7 +7,8 @@ class Project:
         "Cancelled"
     }
 
-    def __init__(self, name, budget, client):
+    def __init__(self, project_id, name, budget, client):
+        self.project_id = project_id
         self.name = name
         self._budget = budget
         self.client = client
