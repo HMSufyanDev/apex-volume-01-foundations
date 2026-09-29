@@ -7,17 +7,16 @@ from utils.exceptions import BackupError, InvalidDataError
 
 class JsonStorage:
 
-    def __init__(self, data_file: Path, backup_file: Path):
-        self.data_file = data_file
-        self.backup_file = backup_file
+    def __init__(self, crm_file: Path, backup_dir: Path):
+        self.crm_file = crm_file
+        self.backup_dir = backup_dir
 
-        # Make sure required directories exist
-        self.data_file.parent.mkdir(
+        self.crm_file.parent.mkdir(
             parents=True,
             exist_ok=True
         )
 
-        self.backup_file.parent.mkdir(
+        self.backup_dir.mkdir(
             parents=True,
             exist_ok=True
         )
@@ -33,22 +32,34 @@ class JsonStorage:
 
     def storage_load(self):
         try:
-            with self.data_file.open("r", encoding="utf-8") as file:
+            with self.crm_file.open(
+                "r",
+                encoding="utf-8"
+            ) as file:
+
                 return json.load(file)
 
         except FileNotFoundError:
+
             data = self.create_empty_data()
+
             self.storage_save(data)
+
             return data
 
         except json.JSONDecodeError as error:
+
             raise InvalidDataError(
-                f"Invalid JSON data in {self.data_file}"
+                f"Invalid JSON data in {self.crm_file}"
             ) from error
 
     def storage_save(self, data):
         try:
-            with self.data_file.open("w", encoding="utf-8") as file:
+            with self.crm_file.open(
+                "w",
+                encoding="utf-8"
+            ) as file:
+
                 json.dump(
                     data,
                     file,
@@ -56,23 +67,35 @@ class JsonStorage:
                 )
 
         except (OSError, TypeError) as error:
+
             raise InvalidDataError(
                 "Could not save data to storage."
             ) from error
 
     def create_backup(self):
-        if not self.data_file.exists():
+
+        if not self.crm_file.exists():
+
             raise BackupError(
                 "Cannot create backup because data file does not exist."
             )
 
         try:
+            from datetime import datetime
+
+            timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
+
+            backup_file = (
+                self.backup_dir / f"crm_backup_{timestamp}.json"
+            )
+
             shutil.copy2(
-                self.data_file,
-                self.backup_file
+                self.crm_file,
+                backup_file
             )
 
         except OSError as error:
+
             raise BackupError(
                 f"Could not create backup: {error}"
             ) from error

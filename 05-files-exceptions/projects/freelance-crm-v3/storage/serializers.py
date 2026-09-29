@@ -1,9 +1,9 @@
 from models import Lead, Client, Project, Invoice
 
 
-# =========================
-# LEAD SERIALIZERS
-# =========================
+# ==================================================
+# LEAD
+# ==================================================
 
 def lead_to_dict(lead: Lead):
     return {
@@ -17,19 +17,24 @@ def lead_to_dict(lead: Lead):
 
 
 def lead_from_dict(data: dict):
-    return Lead(
+    lead = Lead(
         lead_id=data["id"],
         name=data["name"],
         email=data["email"],
         country=data["country"],
-        estimated_value=data["estimated_value"],
-        status=data["status"]
+        estimated_value=data["estimated_value"]
     )
 
+    # JSON stores the current status.
+    # Put that status back into the object.
+    lead.status = data["status"]
 
-# =========================
-# CLIENT SERIALIZERS
-# =========================
+    return lead
+
+
+# ==================================================
+# CLIENT
+# ==================================================
 
 def client_to_dict(client: Client):
     return {
@@ -37,6 +42,8 @@ def client_to_dict(client: Client):
         "name": client.name,
         "email": client.email,
         "country": client.country,
+
+        # We only store IDs in JSON.
         "project_ids": [
             project.project_id
             for project in client.projects
@@ -55,17 +62,22 @@ def client_from_dict(data: dict):
     return client
 
 
-# =========================
-# PROJECT SERIALIZERS
-# =========================
+# ==================================================
+# PROJECT
+# ==================================================
 
 def project_to_dict(project: Project):
     return {
         "id": project.project_id,
         "name": project.name,
         "client_id": project.client.client_id,
-        "budget": project.budget,
+
+        # Project stores _budget internally.
+        "budget": project._budget,
+
         "status": project.status,
+
+        # Store invoice IDs instead of whole Invoice objects.
         "invoice_ids": [
             invoice.invoice_id
             for invoice in project.invoices
@@ -77,23 +89,27 @@ def project_from_dict(data: dict, client: Client):
     project = Project(
         project_id=data["id"],
         name=data["name"],
-        client=client,
         budget=data["budget"],
-        status=data["status"]
+        client=client
     )
+
+    # Restore the saved status.
+    project.status = data["status"]
 
     return project
 
 
-# =========================
-# INVOICE SERIALIZERS
-# =========================
+# ==================================================
+# INVOICE
+# ==================================================
 
 def invoice_to_dict(invoice: Invoice):
     return {
         "id": invoice.invoice_id,
-        "amount": invoice.amount,
+        "amount": invoice._amount,
         "status": invoice.status,
+
+        # Project relationship is stored as an ID.
         "project_id": invoice.project.project_id
     }
 
@@ -101,88 +117,161 @@ def invoice_to_dict(invoice: Invoice):
 def invoice_from_dict(data: dict, project: Project):
     invoice = Invoice(
         invoice_id=data["id"],
-        amount=data["amount"],
-        status=data["status"],
-        project=project
+        amount=data["amount"]
     )
+
+    # Restore saved status.
+    invoice.status = data["status"]
+
+    # Connect invoice to its project.
+    invoice.project = project
 
     return invoice
 
 
-# =========================
-# CRM SERIALIZERS
-# =========================
+# ==================================================
+# COMPLETE CRM → DICTIONARY
+# ==================================================
 
+def crm_to_dict(leads, clients):
+    
+    # We don't have separate projects/invoices lists
+    # in CRMService.
+    #
+    # So we collect them by going through:
+    #
+    # clients → projects → invoices
 
-def crm_to_dict(leads, clients, projects, invoices):
+    projects = []
+
+    for client in clients:
+        for project in client.projects:
+            projects.append(project)
+
+    invoices = []
+
+    for project in projects:
+        for invoice in project.invoices:
+            invoices.append(invoice)
+
     return {
         "leads": [
             lead_to_dict(lead)
             for lead in leads
         ],
+
         "clients": [
             client_to_dict(client)
             for client in clients
         ],
+
         "projects": [
             project_to_dict(project)
             for project in projects
         ],
+
         "invoices": [
             invoice_to_dict(invoice)
             for invoice in invoices
         ]
     }
 
-def crm_from_dict(data):
-    leads = [
-        lead_from_dict(lead_data)
-        for lead_data in data["leads"]
-    ]
 
-    clients = [
-        client_from_dict(client_data)
-        for client_data in data["clients"]
-    ]
+# ==================================================
+# COMPLETE DICTIONARY → CRM OBJECTS
+# ==================================================
+
+def crm_from_dict(data):
+
+    # ----------------------------------------------
+    # STEP 1 — Create Leads
+    # ----------------------------------------------
+
+    leads = []
+
+    for lead_data in data["leads"]:
+
+        lead = lead_from_dict(lead_data)
+
+        leads.append(lead)
+
+
+    # ----------------------------------------------
+    # STEP 2 — Create Clients
+    # ----------------------------------------------
+
+    clients = []
+
+    for client_data in data["clients"]:
+
+        client = client_from_dict(client_data)
+
+        clients.append(client)
+
+
+    # ----------------------------------------------
+    # STEP 3 — Make client ID lookup
+    # ----------------------------------------------
 
     clients_by_id = {
         client.client_id: client
         for client in clients
     }
 
-    projects = []
+
+    # ----------------------------------------------
+    # STEP 4 — Create Projects
+    # ----------------------------------------------
+
+    projects_by_id = {}
 
     for project_data in data["projects"]:
-        client = clients_by_id[project_data["client_id"]]
 
+        # Find which Client owns this project.
+        client = clients_by_id[
+            project_data["client_id"]
+        ]
+
+        # Create Project object.
         project = project_from_dict(
             project_data,
             client
         )
 
-        projects.append(project)
-
+        # IMPORTANT:
+        # Put project inside Client.projects
         client.projects.append(project)
 
-    projects_by_id = {
-        project.project_id: project
-        for project in projects
-    }
+        # Save project in lookup dictionary.
+        projects_by_id[
+            project.project_id
+        ] = project
 
-    invoices = []
+
+    # ----------------------------------------------
+    # STEP 5 — Create Invoices
+    # ----------------------------------------------
 
     for invoice_data in data["invoices"]:
+
+        # Find the Project that owns this invoice.
         project = projects_by_id[
             invoice_data["project_id"]
         ]
 
+        # Create Invoice object.
         invoice = invoice_from_dict(
             invoice_data,
             project
         )
 
-        invoices.append(invoice)
-
+        # IMPORTANT:
+        # Put invoice inside Project.invoices
         project.invoices.append(invoice)
 
-    return leads, clients, projects, invoices
+
+    # ----------------------------------------------
+    # STEP 6 — Return CRM memory
+    # ----------------------------------------------
+
+    return leads, clients

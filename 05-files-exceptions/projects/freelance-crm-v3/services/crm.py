@@ -1,4 +1,5 @@
 from models import Project, Invoice
+from storage.serializers import crm_from_dict
 
 class CRMService:
 
@@ -7,14 +8,18 @@ class CRMService:
         self.leads = []
         self.clients = []
 
-        # self.load_from_storage()
 
 
     # -------------------------
     # Storage Management
     # -------------------------
     
-    
+    def load(self):
+
+        data = self.storage.storage_load()
+
+        self.leads, self.clients = crm_from_dict(data)
+
 
 
     # -------------------------

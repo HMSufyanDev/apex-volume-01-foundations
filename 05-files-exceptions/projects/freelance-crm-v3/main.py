@@ -1,6 +1,18 @@
 
 from models.lead import Lead
 from services.crm import CRMService
+from storage.json_storage import JsonStorage
+from pathlib import Path
+
+
+# ========================================
+# Paths
+# ========================================
+
+
+data_dir = Path("data")
+crm_file = data_dir / "crm.json"
+backup_dir = data_dir / "backups"
 
 
 # ========================================
@@ -550,7 +562,13 @@ def show_menu():
 
 def main():
 
-    crm = CRMService()
+    storage = JsonStorage(
+        crm_file,
+        backup_dir
+    )
+
+    crm = CRMService(storage)
+    crm.load()
 
     while True:
 
