@@ -117,7 +117,8 @@ def invoice_to_dict(invoice: Invoice):
 def invoice_from_dict(data: dict, project: Project):
     invoice = Invoice(
         invoice_id=data["id"],
-        amount=data["amount"]
+        amount=data["amount"],
+        project=project
     )
 
     # Restore saved status.

@@ -1,6 +1,7 @@
 from pathlib import Path
 import json
 import shutil
+from datetime import datetime
 
 from utils.exceptions import BackupError, InvalidDataError
 
@@ -81,7 +82,6 @@ class JsonStorage:
             )
 
         try:
-            from datetime import datetime
 
             timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
 

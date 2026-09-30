@@ -3,7 +3,7 @@ from models.lead import Lead
 from services.crm import CRMService
 from storage.json_storage import JsonStorage
 from pathlib import Path
-
+from utils.exceptions import BackupError
 
 # ========================================
 # Paths
@@ -279,8 +279,12 @@ def delete_lead(crm):
     ).strip().lower()
 
     if confirmation == "y":
-        crm.delete_lead(lead)
-        print("\nLead deleted successfully.")
+        try:
+            crm.delete_lead(lead)
+            print("\nLead deleted successfully.")
+
+        except BackupError as error:
+            print(f"\nDelete failed: {error}")
 
     else:
         print("\nDelete cancelled.")

@@ -33,6 +33,10 @@ class CRMService:
 
         self.storage.storage_save(data)
 
+    def backup(self):
+
+        self.storage.create_backup()
+
 
 
     # -------------------------
@@ -73,6 +77,7 @@ class CRMService:
 
     def delete_lead(self, lead):
         if lead in self.leads:
+            self.backup()
             self.leads.remove(lead)
             self.save()
 
