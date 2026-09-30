@@ -1,5 +1,8 @@
 from models import Project, Invoice
-from storage.serializers import crm_from_dict
+from storage.serializers import (
+    crm_from_dict,
+    crm_to_dict
+)
 
 class CRMService:
 
@@ -21,6 +24,16 @@ class CRMService:
         self.leads, self.clients = crm_from_dict(data)
 
 
+    def save(self):
+
+        data = crm_to_dict(
+            self.leads,
+            self.clients
+        )
+
+        self.storage.storage_save(data)
+
+
 
     # -------------------------
     # Lead Management
@@ -28,6 +41,7 @@ class CRMService:
 
     def add_lead(self, lead):
         self.leads.append(lead)
+        self.save()
 
     def get_leads(self):
         return self.leads
@@ -55,17 +69,22 @@ class CRMService:
         else:
             raise ValueError("Invalid lead status.")
 
+        self.save()
+
     def delete_lead(self, lead):
         if lead in self.leads:
             self.leads.remove(lead)
+            self.save()
 
-    def convert_lead(self, lead):
-        client = lead.convert_to_client()
+    def convert_lead(self, lead, client_id):
+        client = lead.convert_to_client(client_id)
 
         self.clients.append(client)
 
         if lead in self.leads:
             self.leads.remove(lead)
+
+        self.save()
 
         return client
 
@@ -73,8 +92,9 @@ class CRMService:
     # Project Management
     # -------------------------
 
-    def add_project(self, name, budget, client):
+    def add_project(self, project_id, name, budget, client):
         project = Project(
+            project_id,
             name,
             budget,
             client
@@ -82,7 +102,15 @@ class CRMService:
 
         client.add_project(project)
 
+        self.save()
+
         return project
+
+    def update_project_status(self, project, status):
+
+        project.update_status(status)
+
+        self.save()
 
     # -------------------------
     # Invoice Management
@@ -91,9 +119,18 @@ class CRMService:
     def add_invoice(self, project, invoice_id, amount):
         invoice = Invoice(
             invoice_id,
-            amount
+            amount,
+            project
         )
 
         project.add_invoice(invoice)
 
+        self.save()
+
         return invoice
+
+    def mark_invoice_paid(self, invoice):
+
+        invoice.mark_paid()
+
+        self.save()

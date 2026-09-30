@@ -1,8 +1,9 @@
 class Invoice:
 
-    def __init__(self, invoice_id, amount):
+    def __init__(self, invoice_id, amount, project):
         self.invoice_id = invoice_id
         self._amount = amount
+        self.project = project
         self.status = "Unpaid"
 
     def mark_paid(self):

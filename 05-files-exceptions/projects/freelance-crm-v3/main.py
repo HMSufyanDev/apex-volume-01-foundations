@@ -310,7 +310,8 @@ def convert_lead(crm):
         return
 
     try:
-        client = crm.convert_lead(lead)
+        client_id = input("Enter client ID: ").strip()
+        client = crm.convert_lead(lead, client_id)
 
         print("\nLead converted successfully!")
         print(f"Client: {client.name}")
@@ -368,10 +369,12 @@ def add_project(crm):
 
     print(f"\nSelected Client: {client.name}")
 
+    project_id = input("ID: ").strip()
     name = input("Project name: ").strip()
     budget = get_positive_float("Project budget ($): ")
 
     project = crm.add_project(
+        project_id,
         name,
         budget,
         client
@@ -421,7 +424,10 @@ def update_project_status(crm):
         return
 
     try:
-        project.update_status(status)
+        crm.update_project_status(
+            project,
+            status
+        )
 
         print("\nProject status updated successfully.")
 
@@ -486,7 +492,7 @@ def mark_invoice_paid(crm):
         print("\nThis invoice is already paid.")
         return
 
-    invoice.mark_paid()
+    crm.mark_invoice_paid(invoice)
 
     print("\nInvoice marked as paid.")
     print(invoice)

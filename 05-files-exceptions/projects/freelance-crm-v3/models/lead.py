@@ -17,7 +17,7 @@ class Lead:
     def is_high_value(self):
         return self.estimated_value >= 1000
 
-    def convert_to_client(self):
+    def convert_to_client(self, client_id):
         if self.status != "Qualified":
             raise ValueError(
                 "Only qualified leads can be converted."
@@ -26,6 +26,7 @@ class Lead:
         from .client import Client
 
         return Client(
+            client_id,
             self.name,
             self.email,
             self.country
