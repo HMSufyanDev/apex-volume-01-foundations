@@ -4,22 +4,16 @@ from loot_service import LootService
 # ========================================
 # Loot Management
 
-loot_counter = 0
-
 def add_loot(loot) -> None:
 
     while True:
         try:
-            global loot_counter
-            loot_counter += 1
-
-            loot_id = f"L{loot_counter:03d}"
 
             name = input("Enter name: ").strip()
             rarity = input("Enter rarity: ").strip()
             value = float(input("Enter value: "))
 
-            loot = loot.add_loot(loot_id, name, rarity, value)
+            loot = loot.add_loot(name, rarity, value)
 
             print(loot)
 
