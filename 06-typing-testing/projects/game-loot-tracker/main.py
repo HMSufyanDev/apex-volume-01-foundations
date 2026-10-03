@@ -102,8 +102,13 @@ def main() -> None:
     while True:
 
         display_menu()
+     
+        try:
+            choose: int = int(input("Choose: "))
+        except ValueError:
+            print("Choose valid option (1-7)")
+            continue
 
-        choose: int = int(input("Choose: "))
         print()
 
         if choose == 1:
@@ -121,7 +126,7 @@ def main() -> None:
         elif choose == 7:
             break
         else:
-            pass
+            print("Choose valid option (1-7)")
 
 if __name__ == "__main__":
     main()
