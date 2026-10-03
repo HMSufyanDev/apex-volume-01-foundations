@@ -8,4 +8,4 @@ class Loot:
 
 
     def __str__(self):
-        return f"\n ID: {self.id} | Name: {self.name} | Rarity: {self.rarity} | Value: {self.value:.2f} \n"
+        return f"ID: {self.id} | Name: {self.name} | Rarity: {self.rarity} | Value: ${self.value:.2f} \n"

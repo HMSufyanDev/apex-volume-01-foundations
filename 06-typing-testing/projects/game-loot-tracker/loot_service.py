@@ -33,3 +33,15 @@ class LootService:
         self.loots.append(loot)
 
         return loot
+
+    def view_inventory(self) -> None:
+        for loot in self.loots:
+            print(loot)
+
+    def search_loot(self, query) -> list[Loot]:
+
+        validate_query = get_name(query)
+
+        return [loot for loot in self.loots if validate_query in loot.name.lower()]
+
+

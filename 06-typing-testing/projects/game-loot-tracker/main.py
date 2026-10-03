@@ -9,8 +9,8 @@ def add_loot(loot) -> None:
     while True:
         try:
 
-            name = input("Enter name: ").strip()
-            rarity = input("Enter rarity: ").strip()
+            name = input("Enter name: ").strip().capitalize()
+            rarity = input("Enter rarity: ").strip().capitalize()
             value = float(input("Enter value: "))
 
             loot = loot.add_loot(name, rarity, value)
@@ -22,6 +22,28 @@ def add_loot(loot) -> None:
         except ValueError as error:
             print(error)
 
+def view_inventory(loot) -> None:
+    loot.view_inventory()
+
+def search_loot(loot):
+
+    while True:
+        try:
+            query = input("Enter Loot Name: ").strip().lower()
+            available_loots = loot.search_loot(query)
+
+            if not available_loots:
+                print("\nNo loot found matching your query!")
+                return
+
+            print(f"\n--- Search Results ({len(available_loots)}) ---")
+            for loot in available_loots:
+                print(loot)
+
+            break
+
+        except ValueError as error:
+            print(error)
 
 
 # ========================================
@@ -38,6 +60,7 @@ def display_menu() -> None:
     print("5. Show Inventory Value")
     print("6. Remove Loot")
     print("7. Exit")
+    print()
 
 
 def main() -> None:
@@ -49,13 +72,14 @@ def main() -> None:
         display_menu()
 
         choose: int = int(input("Choose: "))
+        print()
 
         if choose == 1:
             add_loot(loot)
         elif choose == 2:
-            pass
+            view_inventory(loot)
         elif choose == 3:
-            pass
+            search_loot(loot)
         elif choose == 4:
             pass
         elif choose == 5:
