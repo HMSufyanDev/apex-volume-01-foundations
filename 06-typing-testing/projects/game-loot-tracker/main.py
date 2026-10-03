@@ -46,6 +46,25 @@ def search_loot(loot):
             print(error)
 
 
+def rare_loot(loot) -> None:
+    rare_loots = loot.rare_loot()
+
+    if not rare_loots:
+        print("\nNo rare loot found!")
+        return
+
+    for loot in rare_loots:
+        print(loot)
+
+
+def inventory_value(loot) -> None:
+
+    value: float = loot.inventory_value()
+
+    print(f"${value}")
+    
+
+
 # ========================================
 
 
@@ -81,9 +100,9 @@ def main() -> None:
         elif choose == 3:
             search_loot(loot)
         elif choose == 4:
-            pass
+            rare_loot(loot)
         elif choose == 5:
-            pass
+            inventory_value(loot)
         elif choose == 6:
             pass
         elif choose == 7:

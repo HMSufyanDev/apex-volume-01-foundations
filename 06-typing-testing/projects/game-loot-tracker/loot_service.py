@@ -44,4 +44,19 @@ class LootService:
 
         return [loot for loot in self.loots if validate_query in loot.name.lower()]
 
+    def rare_loot(self) -> list[Loot]:
+
+        RARE_LOOTS = {
+            "Epic",
+            "Legendary"
+        }
+
+        return [loot for loot in self.loots if loot.rarity in RARE_LOOTS]
+
+    def inventory_value(self) -> float:
+
+        return sum(
+            [loot.value for loot in self.loots]
+        )
+
 
