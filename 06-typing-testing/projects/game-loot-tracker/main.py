@@ -61,7 +61,20 @@ def inventory_value(loot) -> None:
 
     value: float = loot.inventory_value()
 
-    print(f"${value}")
+    print(f"Total inventory value: ${value}")
+
+def remove_loot(loot):
+
+    try:
+        loot.view_inventory()
+        print()
+
+        choose = int(input("Choose by number (1): "))
+        loot = loot.remove_loot(choose)
+
+        print(f"Remove Loot: {loot} successfully")
+    except (ValueError, IndexError) as error:
+        print(error)
     
 
 
@@ -104,7 +117,7 @@ def main() -> None:
         elif choose == 5:
             inventory_value(loot)
         elif choose == 6:
-            pass
+            remove_loot(loot)
         elif choose == 7:
             break
         else:

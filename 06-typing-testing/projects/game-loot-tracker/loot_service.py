@@ -60,3 +60,7 @@ class LootService:
         )
 
 
+    def remove_loot(self, choose) -> Loot:
+
+        loot = self.loots.pop(choose - 1)
+        return loot 
