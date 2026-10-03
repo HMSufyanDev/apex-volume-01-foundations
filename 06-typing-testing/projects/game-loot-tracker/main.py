@@ -8,18 +8,25 @@ loot_counter = 0
 
 def add_loot(loot) -> None:
 
-    global loot_counter
-    loot_counter += 1
+    while True:
+        try:
+            global loot_counter
+            loot_counter += 1
 
-    loot_id = f"L{loot_counter:03d}"
+            loot_id = f"L{loot_counter:03d}"
 
-    name = input("Enter name: ")
-    rarity = input("Enter rarity: ")
-    value = float(input("Enter value: "))
+            name = input("Enter name: ").strip()
+            rarity = input("Enter rarity: ").strip()
+            value = float(input("Enter value: "))
 
-    loot = loot.add_loot(loot_id, name, rarity, value)
+            loot = loot.add_loot(loot_id, name, rarity, value)
 
-    print(loot)
+            print(loot)
+
+            break
+
+        except ValueError as error:
+            print(error)
 
 
 

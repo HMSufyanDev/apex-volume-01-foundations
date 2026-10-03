@@ -1,4 +1,7 @@
 from loot import Loot
+from validators import (
+    get_name
+)
 
 class LootService:
 
@@ -6,10 +9,11 @@ class LootService:
         self.loots: list[Loot] = []
 
     def add_loot(self, id: str, name: str, rarity: str, value: float) -> Loot:
-
+        valid_name = get_name(name)
+        
         loot = Loot(
             id,
-            name,
+            valid_name,
             rarity,
             value
         )
