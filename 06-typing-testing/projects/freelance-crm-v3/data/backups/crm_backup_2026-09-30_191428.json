@@ -1,0 +1,74 @@
+{
+    "leads": [
+        {
+            "id": "L002",
+            "name": "Sarah",
+            "email": "sarah@",
+            "country": "usa",
+            "estimated_value": 34343.0,
+            "status": "Contacted"
+        },
+        {
+            "id": "L003",
+            "name": "jack",
+            "email": "jack@",
+            "country": "uk",
+            "estimated_value": 4324324.0,
+            "status": "New"
+        }
+    ],
+    "clients": [
+        {
+            "id": "C001",
+            "name": "sufyan",
+            "email": "sufyan@",
+            "country": "pakistan",
+            "project_ids": [
+                "P001",
+                "P002"
+            ]
+        },
+        {
+            "id": "C002",
+            "name": "test",
+            "email": "test@",
+            "country": "germany",
+            "project_ids": []
+        }
+    ],
+    "projects": [
+        {
+            "id": "P001",
+            "name": "website",
+            "client_id": "C001",
+            "budget": 4324.0,
+            "status": "In Progress",
+            "invoice_ids": [
+                "I001",
+                "I002"
+            ]
+        },
+        {
+            "id": "P002",
+            "name": "application",
+            "client_id": "C001",
+            "budget": 3243243.0,
+            "status": "Planning",
+            "invoice_ids": []
+        }
+    ],
+    "invoices": [
+        {
+            "id": "I001",
+            "amount": 43434.0,
+            "status": "Paid",
+            "project_id": "P001"
+        },
+        {
+            "id": "I002",
+            "amount": 4343.0,
+            "status": "Unpaid",
+            "project_id": "P001"
+        }
+    ]
+}
